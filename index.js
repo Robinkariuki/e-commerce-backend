@@ -18,6 +18,7 @@ app.use("/api/users", usersRoutes );
 
 
 
+
 mongoose
 .connect('mongodb+srv://robin:hitman11@cluster0.dye5y.mongodb.net/ecommerce?retryWrites=true&w=majority',{useNewUrlParser: true, useUnifiedTopology: true})
 .then(()=>{
