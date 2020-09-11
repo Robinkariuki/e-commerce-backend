@@ -9,8 +9,10 @@ const router = express.Router()
 
 router.get('/products',productControllers.getProducts)
 
-
+router.get('/products/:productId',productControllers.getProductById)
 router.post('/addproduct',fileUpload.single('image'),productControllers.createProduct)
+router.delete('/products/:productId',productControllers.removeProductById)
+
 
 
 
