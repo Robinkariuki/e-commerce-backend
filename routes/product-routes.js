@@ -7,11 +7,11 @@ const productControllers = require('../controllers/products-controller');
 const router = express.Router()
 
 
-router.get('/products',productControllers.getProducts)
+router.get('/',productControllers.getProducts)
 
-router.get('/products/:productId',productControllers.getProductById)
+router.get('/:id',productControllers.getProductById)
 router.post('/addproduct',fileUpload.single('image'),productControllers.createProduct)
-router.delete('/products/:productId',productControllers.removeProductById)
+router.delete('/:id',productControllers.removeProductById)
 
 
 
