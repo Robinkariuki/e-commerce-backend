@@ -20,14 +20,16 @@ const createProduct = async (req,res,next)=>{
     return next(errors)
   }
   const {name,price,description} = req.body;
-  const image = req.file.path
+
   const createdProduct = new Product({
     name,
     description,
     price,
-    image
+    image:req.file.path,
   });
+  console.log(req.file.path)
   try {
+    
     await createdProduct.save()
     res.status(200).json({
       data:createdProduct
@@ -37,6 +39,8 @@ const createProduct = async (req,res,next)=>{
   }
  
 }
+
+
 
 
 

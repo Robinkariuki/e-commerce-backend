@@ -10,9 +10,7 @@ const router = express.Router()
 router.get('/products',productControllers.getProducts)
 
 
-router.post('/addproduct',
-fileUpload.single('image'),
-productControllers.createProduct)
+router.post('/addproduct',fileUpload.single('image'),productControllers.createProduct)
 
 
 

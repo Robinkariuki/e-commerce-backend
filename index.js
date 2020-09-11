@@ -13,10 +13,11 @@ app.use('/uploads/images',express.static(path.join('uploads','images')));
 
 app.get("/", (req, res) => {
    res.json({ message: "API Working" });
+   
 });
 
 app.use("/api/users", usersRoutes );
-app.use("/api/products", productsRoutes);
+app.use("/api/", productsRoutes);
 
 
 
