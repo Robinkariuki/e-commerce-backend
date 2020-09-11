@@ -1,12 +1,12 @@
 const Product = require('../models/product')
 const { validationResult }  = require('express-validator');
-const product = require('../models/product');
+
 
 
 
 
 const getProducts = async(req,res,next)=>{
-  const products = await product.find();
+  const products = await Product.find();
   res.status(200).json({products});
 };
 
@@ -55,15 +55,17 @@ const getProductById = async(req,res,next)=>{
 
 
 const removeProductById = async (req,res)=>{
-  const productId = req.params.id
+const productId =req.params.id
 
-  let productDetails;
-  try {
-     productDetails = await Product.removeProduct(productId)
-     res.status(200).json({data:productDetails})
-  } catch (error) {
-  return next(error)    
-  }
+let productDetails;
+try {
+  productDetails = await Product.findByIdAndDelete(productId);
+  res.status(200).json({message:'deleted product'})
+} catch (error) {
+  return next(error)
+}
+
+
 }
 
 

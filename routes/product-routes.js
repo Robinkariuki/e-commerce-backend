@@ -10,8 +10,9 @@ const router = express.Router()
 router.get('/',productControllers.getProducts)
 
 router.get('/:id',productControllers.getProductById)
-router.post('/addproduct',fileUpload.single('image'),productControllers.createProduct)
 router.delete('/:id',productControllers.removeProductById)
+router.post('/addproduct',fileUpload.single('image'),productControllers.createProduct)
+
 
 
 
