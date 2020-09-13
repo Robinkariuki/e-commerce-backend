@@ -109,3 +109,8 @@ const emptyCart = async (req,res)=>{
         res.status(400).json({type:"invalid",msg:"something went wrong", err:err})
     }
 }
+
+
+exports.addItemToCart = addItemToCart
+exports.getCart = getCart
+exports.emptyCart = emptyCart
