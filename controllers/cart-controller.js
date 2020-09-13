@@ -1,20 +1,8 @@
 const Product = require('../models/product');
-const Cart = require('../models/cart');
-const cart = require('../models/cart');
+const cartRepo = require('../controllers/repository');
 
-// get all cart items method
-const  getAllCartItems = async ()=>{
-    const carts = await Cart.find().populate({
-        path: "items.productId",
-        select: "name price total"
-    });
-    return carts[0];
-}
-//add item to cart model method
-const addItem = async payload =>{
-    const newItem = await Cart.create(payload);
-    return newItem
-}
+
+
 
 
 
@@ -23,7 +11,7 @@ const addItemToCart = async (req,res)=>{
     const {productId} = req.body
     const quantity = Number.parseInt(req.body.quantity);
     try{
-        const cart = await Cart.getAllCartItems()
+        const cart = await cartRepo.cart()
         const productDetails = await Product.findById(productId);
         if(!productDetails){
             return res.status(500).json({ type:"Not found", msg:"invalid request"})
@@ -80,7 +68,7 @@ else {
          subTotal :parseInt(productDetails.prcie *quantity)
 
     }
-    cart = await Cart.addItem(cartData)
+    cart = await cartRepo.addItem(cartData)
     // let data = await cart.save();
     res.json(cart);
 }
@@ -93,3 +81,19 @@ else {
 
 
 }
+
+
+const getCart = async (req,res)=>{
+    try{
+        let cart = await cartRepo.cart()
+        if(!cart){
+            return res.status(400).json({type:"invalid",msg:"cart Not found"})
+        }
+        res.status(200).json({status:true,data:cart})
+    }catch(err){
+        console.log(err)
+        res.status(400).json({type:"invalid",msg:"something went wrong",err:err})
+    }
+    
+}
+
