@@ -97,3 +97,15 @@ const getCart = async (req,res)=>{
     
 }
 
+const emptyCart = async (req,res)=>{
+    try{
+        let cart = await cartRepo.cart()
+        cart.items =[];
+        cart.subTotal= 0
+        let data = await cart.save();
+        res.status(200).json({type:"success",msg:"cart Has been emptied",data:data})
+    }catch(err){
+        console.log(err)
+        res.status(400).json({type:"invalid",msg:"something went wrong", err:err})
+    }
+}
