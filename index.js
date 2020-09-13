@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const usersRoutes = require("./routes/user-routes")
 const productsRoutes = require("./routes/product-routes")
+const cartRoutes = require("./routes/cart-routes");
 const path = require('path')
 
 const app = express()
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", usersRoutes );
 app.use("/api/products", productsRoutes);
+app.use("/api/cart",cartRoutes);
 
 
 
