@@ -193,3 +193,4 @@ const emptyCart = async (req,res)=>{
 exports.addItemToCart = addItemToCart
 exports.getCart = getCart
 exports.emptyCart = emptyCart
+exports.removeItemCart =removeItemCart
