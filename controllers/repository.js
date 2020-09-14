@@ -16,3 +16,9 @@ exports.addItem = async payload => {
     const newItem = await Cart.create(payload);
     return newItem
 }
+
+//remove item from cart model method
+exports.removeItem = async payload =>{
+    const item = await Cart.remove(payload)
+    return item
+}
