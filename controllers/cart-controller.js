@@ -1,6 +1,7 @@
 const Product = require('../models/product');
 const cartRepo = require('../controllers/repository');
 const e = require('express');
+const { compare } = require('bcryptjs');
 
 
 
@@ -46,6 +47,7 @@ try{
 
 const addQuantityCart = async (req,res)=>{
     const {productId}= req.body
+
     try{
         let cart = await cartRepo.cart()
         let quantity = await cart.items.quantity
@@ -105,7 +107,9 @@ else {
          subTotal :parseInt(productDetails.price *quantity)
 
     }
+    
      cart = await cartRepo.addItem(cartData)
+     
     // let data = await cart.save();
     res.json(cart);
 }
