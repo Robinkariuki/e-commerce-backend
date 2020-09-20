@@ -5,7 +5,6 @@ const usersRoutes = require("./routes/user-routes")
 const productsRoutes = require("./routes/product-routes")
 const cartRoutes = require("./routes/cart-routes");
 const path = require('path')
-var cors = require('cors')
 const app = express()
 
 
@@ -18,6 +17,7 @@ app.use((req, res, next) => {
     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   );
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+
 
   next();
 });

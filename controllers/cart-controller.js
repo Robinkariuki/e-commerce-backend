@@ -1,6 +1,6 @@
 const Product = require('../models/product');
 const cartRepo = require('../controllers/repository');
-
+const e = require('express');
 
 
 
@@ -12,6 +12,7 @@ const removeProductCart = async(req,res)=>{
 try{
     let cart = await cartRepo.cart()
     let productDetails = await Product.findById(productId);
+
     let indexFound = cart.items.findIndex(item => item.productId.id == productId);
     if(!productDetails){
         return res.status(500).json({ type:"Not found", msg:"invalid request"})
@@ -159,6 +160,7 @@ const subtractQuantityCart = async (req,res)=>{
         cart.items[indexFound].quantity = cart.items[indexFound].quantity - 1;
         cart.items[indexFound].total = cart.items[indexFound].quantity * productDetails.price;
         cart.items[indexFound].price = productDetails.price
+        cart.items[indexFound].image = productDetails.image
         cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next); 
        }
        //----Check if Quantity is Greater than 0 then add item to items Array ----
@@ -167,6 +169,7 @@ const subtractQuantityCart = async (req,res)=>{
                productId:productId,
                quantity:quantity,
                price:productDetails.price,
+               image:image,
                total: parseInt(productDetails.price * quantity)
            })
            cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
@@ -247,6 +250,7 @@ const addItemToCart = async (req,res)=>{
                productId:productId,
                quantity:quantity,
                price:productDetails.price,
+               image:productDetails.image,
                total: parseInt(productDetails.price * quantity)
            })
            cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
@@ -265,7 +269,9 @@ else {
              productId: productId,
              quantity:quantity,
              total:parseInt(productDetails.price * quantity),
-             price: productDetails.price
+             price: productDetails.price,
+             image:image
+             
          }],
          subTotal :parseInt(productDetails.price *quantity)
 
