@@ -1,7 +1,7 @@
 const Product = require('../models/product');
 const cartRepo = require('../controllers/repository');
-const e = require('express');
-const { compare } = require('bcryptjs');
+
+
 
 
 
@@ -13,8 +13,10 @@ const removeProductCart = async(req,res)=>{
 try{
     let cart = await cartRepo.cart()
     let productDetails = await Product.findById(productId);
+  
 
     let indexFound = cart.items.findIndex(item => item.productId.id == productId);
+    
     if(!productDetails){
         return res.status(500).json({ type:"Not found", msg:"invalid request"})
     }
@@ -47,6 +49,7 @@ try{
 
 const addQuantityCart = async (req,res)=>{
     const {productId}= req.body
+   
 
     try{
         let cart = await cartRepo.cart()
