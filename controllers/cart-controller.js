@@ -8,6 +8,7 @@ const cartRepo = require('../controllers/repository');
 
 
 
+
 const removeProductCart = async(req,res)=>{
  const {productId} = req.body
 try{
@@ -79,6 +80,7 @@ const addQuantityCart = async (req,res)=>{
         cart.items[indexFound].quantity = cart.items[indexFound].quantity + 1;
         cart.items[indexFound].total = cart.items[indexFound].quantity * productDetails.price;
         cart.items[indexFound].price = productDetails.price
+        cart.items[indexFound].name = productDetails.name
         cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next); 
        }
        //----Check if Quantity is Greater than 0 then add item to items Array ----
@@ -102,6 +104,7 @@ const addQuantityCart = async (req,res)=>{
 else {
      const cartData = {
          items :[{
+             name:productDetails.name,
              productId: productId,
              quantity:quantity,
              total:parseInt(productDetails.price * quantity),
@@ -143,6 +146,7 @@ const subtractQuantityCart = async (req,res)=>{
         let cart = await cartRepo.cart()
         let quantity = await cart.items.quantity
         let productDetails = await Product.findById(productId);
+       
         if(!productDetails){
             return res.status(500).json({ type:"Not found", msg:"invalid request"})
         }
@@ -168,11 +172,13 @@ const subtractQuantityCart = async (req,res)=>{
         cart.items[indexFound].total = cart.items[indexFound].quantity * productDetails.price;
         cart.items[indexFound].price = productDetails.price
         cart.items[indexFound].image = productDetails.image
+        cart.items[indexFound].name = productDetails.name
         cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next); 
        }
        //----Check if Quantity is Greater than 0 then add item to items Array ----
        else if (quantity > 0) {
            cart.items.push({
+               name:name,
                productId:productId,
                quantity:quantity,
                price:productDetails.price,
@@ -192,6 +198,7 @@ const subtractQuantityCart = async (req,res)=>{
 else {
      const cartData = {
          items :[{
+             name:productDetails.name,
              productId: productId,
              quantity:quantity,
              total:parseInt(productDetails.price * quantity),
@@ -225,6 +232,7 @@ const addItemToCart = async (req,res)=>{
     try{
         let cart = await cartRepo.cart()
         let productDetails = await Product.findById(productId);
+        console.log(productDetails.name)
         if(!productDetails){
             return res.status(500).json({ type:"Not found", msg:"invalid request"})
         }
@@ -254,6 +262,7 @@ const addItemToCart = async (req,res)=>{
        //----Check if Quantity is Greater than 0 then add item to items Array ----
        else if (quantity > 0) {
            cart.items.push({
+               name:productDetails.name,
                productId:productId,
                quantity:quantity,
                price:productDetails.price,
@@ -273,6 +282,7 @@ const addItemToCart = async (req,res)=>{
 else {
      const cartData = {
          items :[{
+             name:name,
              productId: productId,
              quantity:quantity,
              total:parseInt(productDetails.price * quantity),
