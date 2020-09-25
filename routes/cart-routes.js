@@ -3,7 +3,7 @@ const cartControllers = require('../controllers/cart-controller')
 const checkAuth = require('../middleware/check-auth')
 
 const router = express.Router()
-router.use(checkAuth);
+// router.use(checkAuth);
 router.post('/addtocart', cartControllers.addItemToCart);
 router.get("/get-cart", cartControllers.getCart);
 router.delete("/empty-cart", cartControllers.emptyCart);

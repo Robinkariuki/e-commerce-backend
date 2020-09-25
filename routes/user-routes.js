@@ -19,4 +19,5 @@ router.post('/login',[
   ],usersControllers.login)
 
 
+router.post('/tokenIsValid',usersControllers.tokenIsValid)
 module.exports = router;

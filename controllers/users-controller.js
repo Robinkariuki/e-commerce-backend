@@ -45,7 +45,9 @@ const signup = async (req,res)=>{
        res.status(200).json({
         token,
         email:user.email,
-        userId:user.id
+        userId:user.id,
+        
+        
        });
    }
    
@@ -59,7 +61,7 @@ const login = async (req,res)=>{
     if(!errors.isEmpty()){
         return res.status(400).json({errors:errors.array()});
     }
-   
+    console.log(res)
     const { email, password} = req.body;
     try{
         let user = await User.findOne({email});
@@ -86,7 +88,7 @@ const login = async (req,res)=>{
             },
            (err,token) =>{
                if(err) throw err;
-               res.status(200).json({token});
+               res.status(200).json({token,userId:user.id});
            }
         )    
 
@@ -98,5 +100,24 @@ const login = async (req,res)=>{
     }
 }
 
+
+const tokenIsValid = async (req, res) => {
+    try {
+      const token = req.header("x-auth-token");
+      if (!token) return res.json(false);
+  
+      const verified = jwt.verify(token,'escapades');
+      if (!verified) return res.json(false);
+  
+      const user = await User.findById(verified.id);
+      if (!user) return res.json(false);
+  
+      return res.json(true);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+
 exports.login =login
 exports.signup =signup
+exports.tokenIsValid=tokenIsValid
