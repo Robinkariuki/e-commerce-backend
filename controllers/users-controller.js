@@ -110,7 +110,7 @@ const tokenIsValid = async (req, res) => {
   
       const verified = jwt.verify(token,'escapades');
       if (!verified) return res.json(false);
-  
+        console.log(verified)
       const user = await User.findById(verified.user.id);
      
       if (!user) return res.json(false);
