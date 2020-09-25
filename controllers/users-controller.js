@@ -89,6 +89,7 @@ const login = async (req,res)=>{
            (err,token) =>{
                if(err) throw err;
                res.status(200).json({token,userId:user.id});
+               console.log(payload)
            }
         )    
 
@@ -103,13 +104,15 @@ const login = async (req,res)=>{
 
 const tokenIsValid = async (req, res) => {
     try {
-      const token = req.header("x-auth-token");
+        const token = req.headers.authorization.split(' ')[1];
+       
       if (!token) return res.json(false);
   
       const verified = jwt.verify(token,'escapades');
       if (!verified) return res.json(false);
   
-      const user = await User.findById(verified.id);
+      const user = await User.findById(verified.user.id);
+     
       if (!user) return res.json(false);
   
       return res.json(true);
@@ -117,12 +120,10 @@ const tokenIsValid = async (req, res) => {
       res.status(500).json({ error: err.message });
     }
   }
-  const getUser =  async (req, res) => {
-    const user = await User.findById(req.user);
-    res.json({
-      displayName: user.displayName,
-      id: user._id,
-    });
+  const getUser = async (req, res) => {
+    const user = await User.findById(req.userData.user.id);
+    
+    res.json({user});
   }
 
 exports.login =login
