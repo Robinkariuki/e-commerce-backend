@@ -117,7 +117,15 @@ const tokenIsValid = async (req, res) => {
       res.status(500).json({ error: err.message });
     }
   }
+  const getUser =  async (req, res) => {
+    const user = await User.findById(req.user);
+    res.json({
+      displayName: user.displayName,
+      id: user._id,
+    });
+  }
 
 exports.login =login
 exports.signup =signup
 exports.tokenIsValid=tokenIsValid
+exports.getUser =getUser

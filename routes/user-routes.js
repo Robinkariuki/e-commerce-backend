@@ -18,6 +18,6 @@ router.post('/login',[
     check("password", "Please enter a valid password").isLength({min:6})
   ],usersControllers.login)
 
-
+router.get('/getuser',usersControllers.getUser)
 router.post('/tokenIsValid',usersControllers.tokenIsValid)
 module.exports = router;
