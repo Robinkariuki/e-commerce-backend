@@ -2,10 +2,10 @@ const jwt = require('jsonwebtoken');
 
 const HttpError = require('../util/http-error')
 
-module.exports = (req,res,next)=>{
+    const auth = (req,res,next)=>{
  
         try {
-            const token = req.headers.authorization.split(' ')[1]; //Authorization:'Bearer Token'
+            const token = req.headers.authorization.split(' ')[1];
             if(!token){ 
                 throw new Error('Authentication failed')
             }
@@ -20,3 +20,6 @@ module.exports = (req,res,next)=>{
         }
         
     };
+
+
+    module.exports = auth;

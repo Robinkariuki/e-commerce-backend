@@ -11,7 +11,7 @@ const signup = async (req,res)=>{
             errors:errors.array()
         });
     }
-
+    console.log(req)
     const{username,password,email} = req.body;
 
     let user = await User.findOne({email:email});
@@ -57,7 +57,7 @@ const signup = async (req,res)=>{
 
 const login = async (req,res)=>{
     const errors = validationResult(req);
-
+    console.log(req)
     if(!errors.isEmpty()){
         return res.status(400).json({errors:errors.array()});
     }
@@ -103,14 +103,14 @@ const login = async (req,res)=>{
 
 
 const tokenIsValid = async (req, res) => {
+   
     try {
         const token = req.headers.authorization.split(' ')[1];
-       
+       console.log(req)
       if (!token) return res.json(false);
   
       const verified = jwt.verify(token,'escapades');
       if (!verified) return res.json(false);
-        console.log(verified)
       const user = await User.findById(verified.user.id);
      
       if (!user) return res.json(false);
@@ -122,6 +122,7 @@ const tokenIsValid = async (req, res) => {
   }
   const getUser = async (req, res) => {
     const user = await User.findById(req.userData.user.id);
+    console.log(res)
     
     res.json({user});
   }
