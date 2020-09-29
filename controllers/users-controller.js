@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require('../models/user');
 
 
-const signup = async (req,res)=>{
+const signup = async (req,res,next)=>{
     const errors =validationResult(req);
     if(!errors.isEmpty()){
         return res.status(400).json({
@@ -29,6 +29,7 @@ const signup = async (req,res)=>{
     user.password = await bcrypt.hash(password,salt);
  try {
     await user.save();
+    
  } catch (error) {
      console.log(error)
  }
@@ -44,8 +45,7 @@ const signup = async (req,res)=>{
        if(err) throw err;
        res.status(200).json({
         token,
-        email:user.email,
-        userId:user.id,
+        user,
         
         
        });
