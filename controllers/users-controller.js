@@ -16,7 +16,7 @@ const signup = async (req,res,next)=>{
      if (password.length < 6)
        return res
          .status(400)
-         .json({ msg: "The password needs to be at least 5 characters long." });
+         .json({ msg: "The password needs to be at least 6 characters long." });
      
 
     let user = await User.findOne({email:email});
