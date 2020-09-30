@@ -1,20 +1,26 @@
-const { validationResult }  = require('express-validator');
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require('../models/user');
 
 
 const signup = async (req,res,next)=>{
-    const errors =validationResult(req);
-    if(!errors.isEmpty()){
-        return res.status(400).json({
-            errors:errors.array()
-        });
-    }
-    console.log(req)
+    try {
+ 
+   console.log(req)
     const{username,password,email} = req.body;
+       // validate
+
+       if (!username || !password || !email)
+       return res.status(400).json({ msg: "Not all fields have been entered." });
+     if (password.length < 6)
+       return res
+         .status(400)
+         .json({ msg: "The password needs to be at least 5 characters long." });
+     
 
     let user = await User.findOne({email:email});
+
     if(user){
         return res.status(400).json({
             msg: "User Already Exists "
@@ -27,12 +33,9 @@ const signup = async (req,res,next)=>{
     });
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password,salt);
- try {
+ 
     await user.save();
-    
- } catch (error) {
-     console.log(error)
- }
+
    
 
    const payload ={
@@ -52,18 +55,22 @@ const signup = async (req,res,next)=>{
    }
    
    );
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+    
   
 }
 
 const login = async (req,res)=>{
-    const errors = validationResult(req);
-    console.log(req)
-    if(!errors.isEmpty()){
-        return res.status(400).json({errors:errors.array()});
-    }
+
     console.log(res)
-    const { email, password} = req.body;
     try{
+    const { email, password} = req.body;
+    
+        if (!email || !password)
+      return res.status(400).json({ msg: "Not all fields have been entered." });
+
         let user = await User.findOne({email});
         if(!user)
         return res.status(400).json({
