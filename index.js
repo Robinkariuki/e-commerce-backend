@@ -34,7 +34,7 @@ app.use("/api/cart",cartRoutes);
 
 
 mongoose
-.connect('mongodb+srv://robin:hitman11@cluster0.dye5y.mongodb.net/ecommerce?retryWrites=true&w=majority',{useNewUrlParser: true, useUnifiedTopology: true})
+.connect(`mongodb+srv://robin:hitman11@cluster0.dye5y.mongodb.net/ecommerce?retryWrites=true&w=majority`,{useNewUrlParser: true, useUnifiedTopology: true})
 .then(()=>{
   console.log('connected')
 

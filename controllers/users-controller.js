@@ -96,7 +96,7 @@ const login = async (req,res)=>{
            (err,token) =>{
                if(err) throw err;
                res.status(200).json({token,userId:user.id});
-               console.log(payload)
+              
            }
         )    
 
@@ -113,7 +113,7 @@ const tokenIsValid = async (req, res) => {
    
     try {
         const token = req.headers.authorization.split(' ')[1];
-       console.log(req)
+      
       if (!token) return res.json(false);
   
       const verified = jwt.verify(token,'escapades');
@@ -129,7 +129,7 @@ const tokenIsValid = async (req, res) => {
   }
   const getUser = async (req, res) => {
     const user = await User.findById(req.userData.user.id);
-    console.log(res)
+    
     
     res.json({user});
   }
