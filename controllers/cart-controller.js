@@ -221,7 +221,7 @@ else {
 
 }
 
-///jasdbjhsbdjhasjhdjasdhasdjhas
+
 
 
 
@@ -232,7 +232,7 @@ const addItemToCart = async (req,res)=>{
     try{
         let cart = await cartRepo.cart()
         let productDetails = await Product.findById(productId);
-        console.log(productDetails.name)
+      
         if(!productDetails){
             return res.status(500).json({ type:"Not found", msg:"invalid request"})
         }
@@ -294,7 +294,7 @@ else {
 
     }
      cart = await cartRepo.addItem(cartData)
-    // let data = await cart.save();
+  
     res.json(cart);
 }
 
