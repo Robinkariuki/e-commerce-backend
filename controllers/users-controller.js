@@ -7,7 +7,7 @@ const User = require('../models/user');
 const signup = async (req,res,next)=>{
     try {
  
-   console.log(req)
+   
     const{username,password,email} = req.body;
        // validate
 
@@ -64,7 +64,7 @@ const signup = async (req,res,next)=>{
 
 const login = async (req,res)=>{
 
-    console.log(res)
+   
     try{
     const { email, password} = req.body;
     

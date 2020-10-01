@@ -27,7 +27,7 @@ const createProduct = async (req,res,next)=>{
     price,
     image:req.file.path,
   });
-  console.log(req.file.path)
+
   try {
     
     await createdProduct.save()
