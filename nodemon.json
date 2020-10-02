@@ -1,8 +1,0 @@
-{
-    "env":{
-        "DB_USER":"robin",
-        "DB_PASSWORD":"hitman11",
-        "DB_NAME":"ecommerce",
-        "JWT_KEY":"escapades"
-    }
-}
