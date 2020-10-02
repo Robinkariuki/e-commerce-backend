@@ -9,7 +9,7 @@ const HttpError = require('../util/http-error')
             if(!token){ 
                 throw new Error('Authentication failed')
             }
-           const decodedToken= jwt.verify(token,'escapades') 
+           const decodedToken= jwt.verify(token,process.env.JWT_KEY) 
          
            req.userData = decodedToken
           

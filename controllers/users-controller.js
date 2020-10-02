@@ -43,7 +43,7 @@ const signup = async (req,res,next)=>{
            id:user.id
        }
    };
-   jwt.sign(payload,"escapades",{expiresIn:1000},
+   jwt.sign(payload,process.env.JWT_KEY,{expiresIn:1000},
    (err,token)=>{
        if(err) throw err;
        res.status(200).json({
@@ -89,7 +89,7 @@ const login = async (req,res)=>{
         };
         jwt.sign(
             payload,
-            "escapades",
+            process.env.JWT_KEY,
             {
                 expiresIn:3600
             },
@@ -116,7 +116,7 @@ const tokenIsValid = async (req, res) => {
       
       if (!token) return res.json(false);
   
-      const verified = jwt.verify(token,'escapades');
+      const verified = jwt.verify(token,process.env.JWT_KEY);
       if (!verified) return res.json(false);
       const user = await User.findById(verified.user.id);
      
